@@ -230,16 +230,20 @@
         <div class="w-full max-w-6xl text-center">
             <h2 class="text-5xl font-bold mb-12">Vom Prompt zur Systemarchitektur</h2>
             <p class="text-xl text-gray-300 mb-8">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p>
-            <!-- 
-                IMAGE PLACEHOLDER: 
-                Create a simple diagram showing the flow.
-                For example: [User Interface] -> [JavaScript Logic] -> [Prompt Assembly] -> [LLM API] -> [Response Parsing] -> [UI]
-                Save it as 'img/presentation/architecture_diagram.png'
-            -->
-            <img src="img/presentation/architecture_diagram.png" 
-                 alt="System Architecture Diagram" 
-                 class="mx-auto rounded-lg shadow-lg border border-gray-700"
-                 onerror="this.onerror=null;this.src='https://placehold.co/900x400/111827/374151?text=architecture_diagram.png';">
+            <div class="mt-8">
+              <iframe 
+                src="https://rossipietro.github.io/prezis/flow.html"
+                width="100%"
+                height="400"
+                style="border: 1px solid #374151; border-radius: 0.5rem; background: #18181b;"
+                title="Flow Diagram">
+              </iframe>
+              <div class="text-center mt-2 text-xs text-gray-400">
+                <a href="https://rossipietro.github.io/prezis/flow.html" target="_blank" class="hover:text-indigo-400">
+                  Flow-Diagramm als eigene Seite öffnen
+                </a>
+              </div>
+            </div>
             <p class="mt-8 text-lg text-gray-400">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p>
         </div>
     </section>
