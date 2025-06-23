@@ -160,43 +160,34 @@
         </div>
     </section>
 
-    <!-- SLIDE 2: The Models -->
-    <section class="slide">
-        <div class="w-full max-w-6xl">
-            <h2 class="text-5xl font-bold mb-12 text-center">Die Werkzeugkiste der Modelle</h2>
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <!-- Left side: Main Models -->
-                <div class="flex-1 text-center">
-                    <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Fokus-Modelle</h3>
-                    <div class="flex justify-center gap-8 items-center">
-                        <!-- 
-                            IMAGE PLACEHOLDER: 
-                            Create a single PNG image with both OpenAI and Gemini logos.
-                            Save it as 'img/presentation/logos_main.png'
-                        -->
-                        <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-24" onerror="this.onerror=null;this.src='https://placehold.co/400x150/111827/374151?text=logos_main.png';">
-                    </div>
-                </div>
-                <!-- Right side: Other Models & Description -->
-                <div class="flex-1 text-center md:text-left">
-                     <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3>
-                     <div class="flex justify-center md:justify-start gap-8 items-center">
-                        <!-- 
-                            IMAGE PLACEHOLDER: 
-                            Create a single PNG image with both Claude and DeepSeek logos, slightly smaller.
-                            Save it as 'img/presentation/logos_alternatives.png'
-                        -->
-                        <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/300x100/111827/374151?text=logos_alternatives.png';">
-                    </div>
-                    <ul class="mt-8 space-y-3 text-lg text-gray-300 list-disc list-inside">
-                        <li><strong>GPT-4o/4.1:</strong> Der qualitative Alleskönner für komplexe Textaufgaben.</li>
-                        <li><strong>Gemini 2.0/2.5:</strong> Der Multimedia-Spezialist für Audio- & Video-Inputs.</li>
-                        <li><strong>Claude/DeepSeek:</strong> Starke Alternativen für spezifische Aufgaben und Kosteneffizienz.</li>
-                    </ul>
-                </div>
+<!-- SLIDE 2: The Models -->
+<section class="slide">
+    <div class="w-full max-w-6xl h-full flex flex-col justify-between">
+        <h2 class="text-5xl font-bold mb-12 text-center">Die Werkzeugkiste</h2>
+        <div class="flex flex-col md:flex-row items-start gap-12 flex-grow">
+            <!-- Left side: Main Models -->
+            <div class="flex-1 flex flex-col items-center">
+                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-24 mb-4"
+                    onerror="this.onerror=null;this.src='https://placehold.co/400x150/111827/374151?text=logos_main.png';">
+                <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3>
+            </div>
+            <!-- Right side: Other Models & Description -->
+            <div class="flex-1 flex flex-col items-center md:items-start">
+                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-16 mb-4"
+                    onerror="this.onerror=null;this.src='https://placehold.co/300x100/111827/374151?text=logos_alternatives.png';">
+                <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3>
             </div>
         </div>
-    </section>
+        <!-- Centered bulletpoints at the bottom -->
+        <div class="flex justify-center mt-8 mb-4">
+            <ul class="space-y-3 text-lg text-gray-300 list-disc list-inside text-center max-w-2xl">
+                <li><strong>GPT-4o/4.1:</strong> Der qualitative Alleskönner für komplexe Textaufgaben.</li>
+                <li><strong>Gemini 2.0/2.5:</strong> Der Multimedia-Spezialist für Audio- & Video-Inputs.</li>
+                <li><strong>Claude/DeepSeek:</strong> Starke Alternativen für spezifische Aufgaben und Kosteneffizienz.</li>
+            </ul>
+        </div>
+    </div>
+</section>
 
     <!-- SLIDE 3: Prompt Engineering -->
     <section class="slide">
@@ -218,16 +209,22 @@
                 </div>
                 <!-- After -->
                 <div class="flex-1 flex flex-col">
-                    <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3>
-                    <div class="flex-grow rounded-lg overflow-hidden border border-gray-700">
-                        <iframe src="https://raw.githubusercontent.com/aburossi/olat_fragen_user/main/prompts/single_choice.md" 
-                                class="w-full h-full bg-gray-800"
-                                title="Engineered Prompt from GitHub"></iframe>
-                    </div>
-                    <a href="https://raw.githubusercontent.com/aburossi/olat_fragen_user/main/prompts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400">
-                        Link zum Prompt auf GitHub
-                    </a>
+                  <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3>
+                  <div id="mdBox" style="height: 300px; overflow-y: auto; border: 1px solid #374151; background: #18181b; color: #d1d5db; border-radius: 8px; padding: 1em;">
+                    Lade Inhalt...
+                  </div>
+                  <a href="https://github.com/rossipietro/prezis/blob/main/texts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400">
+                    Link zum Prompt auf GitHub
+                  </a>
                 </div>
+                <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+                <script>
+                fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/texts/single_choice.md')
+                  .then(res => res.text())
+                  .then(md => {
+                    document.getElementById('mdBox').innerHTML = marked.parse(md);
+                  });
+                </script>
             </div>
         </div>
     </section>
