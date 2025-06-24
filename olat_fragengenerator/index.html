@@ -1,3 +1,4 @@
+99 Zettelkasten/Untitled 35.md
 <!DOCTYPE html> 
 <html lang="de"> 
 <head> 
@@ -131,13 +132,15 @@
                 <p class="mt-12 text-xl text-gray-400">Pietro Rossi</p> 
                 <p class="mt-2 text-base text-gray-500">BBW.ch</p> 
             </div>
-            <!-- QR code and link centered below main content -->
+            <!-- QR code and link centered below main content with white frame -->
             <div class="mt-8 flex flex-col items-center">
-                <img src="img/presentation/qr_code_tool2.png"  
-                     alt="QR Code to presentation"  
-                     class="h-24 mb-2" 
-                     onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';"> 
-                <a href="http://aburossi.ch/oot" target="_blank" class="text-sm text-gray-400 hover:text-indigo-400">
+                <div class="bg-white p-4 rounded-lg inline-block">
+                    <img src="img/presentation/qr_code_tool2.png"  
+                         alt="QR Code to presentation"  
+                         class="h-24" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';"> 
+                </div>
+                <a href="http://aburossi.ch/oot" target="_blank" class="mt-2 text-sm text-gray-400 hover:text-indigo-400">
                     aburossi.ch/oot
                 </a>
             </div>
@@ -221,10 +224,8 @@
             <!-- Nachher Rahmen --> 
             <div class="flex-1 flex flex-col"> 
               <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3> 
-              <div id="mdBox" style="height:600px; overflow-y:auto; border:1px solid #374151; background:#18181b; color:#d1d5db; border-radius:8px; display:flex; align-items:center; justify-content:center;">
-                <button id="loadButton" class="px-6 py-3 bg-green-600 text-white rounded-lg text-xl font-medium hover:bg-green-700 transition">
-                  Inhalt laden
-                </button>
+              <div id="mdBox" style="height:600px; overflow-y:auto; border:1px solid #374151; background:#18181b; color:#d1d5db; border-radius:8px; padding:1em;"> 
+                Lade Inhalt... 
               </div> 
               <a href="https://github.com/rossipietro/prezis/blob/main/olat_fragengenerator/texts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400"> 
                 Link zum Prompt auf GitHub 
@@ -232,7 +233,7 @@
             </div> 
             <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
             <script> 
-              document.getElementById('loadButton').addEventListener('click', function() {
+            document.getElementById('loadButton').addEventListener('click', function() {
                 fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/olat_fragengenerator/texts/single_choice.md') 
                   .then(res => res.text()) 
                   .then(md => { 
@@ -255,7 +256,7 @@
 <section class="slide"> 
   <div class="w-full max-w-6xl flex flex-col"> 
     <h2 class="text-5xl font-bold mb-12 text-center">Vom Prompt zur Systemarchitektur</h2> 
-    
+
     <iframe  
       src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html"
       width="100%" 
@@ -263,8 +264,7 @@
       style="border:1px solid #374151; border-radius:0.5rem; background:#18181b;" 
       title="Flow Diagram"> 
     </iframe> 
-    
-    <div class="mt-2 space-y-2"> 
+    <div class="mt-4 space-y-2"> 
       <p class="text-lg text-gray-300">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
       <p class="text-lg text-gray-300">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p> 
     </div>
@@ -352,13 +352,19 @@
             <div class="flex-1 text-center fragment"> 
                 <h3 class="text-6xl font-bold text-white">Fragen?</h3> 
                 <p class="mt-4 text-lg">Pietro Rossi | pietro.rossi@bbw.ch</p> 
-                <!-- QR code with link --> 
-                <img src="img/presentation/qr_code_tool2.png"  
-                     alt="QR Code to live tool"  
-                     class="mx-auto mt-6 rounded-lg" 
-                     onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';"> 
+                <!-- QR code with white frame -->
+                <div class="bg-white p-4 rounded-lg inline-block mt-6">
+                    <img src="img/presentation/qr_code_tool2.png"  
+                         alt="QR Code to live tool"  
+                         class="h-32" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';"> 
+                </div>
                 <a href="http://aburossi.ch/oot" target="_blank" class="mt-2 text-sm text-gray-400 hover:text-indigo-400 block">
                     aburossi.ch/oot
+                </a>
+                <p class="mt-2 text-gray-400">Tool jetzt ausprobieren!</p> 
+                <a href="http://aburossi.ch/oot" target="_blank" class="mt-2 block text-sm text-gray-400 hover:text-indigo-400">
+                    Kurzlink: aburossi.ch/oot
                 </a>
             </div> 
         </div> 
