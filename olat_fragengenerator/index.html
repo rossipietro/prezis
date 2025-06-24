@@ -1,407 +1,446 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Präsentation: Vom Prompt zum Fragepool</title>
-    
-        <script src="https://cdn.tailwindcss.com"></script>
-    
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<!DOCTYPE html> 
+<html lang="de"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Präsentation: Vom Prompt zum Fragepool</title> 
+     
+    <!-- Tailwind CSS for rapid styling --> 
+    <script src="https://cdn.tailwindcss.com"></script> 
+     
+    <!-- Google Fonts for a clean, modern look --> 
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"> 
 
-    <style>
-        /* Custom styles for the presentation */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* Dark background */
-            color: #F9FAFB; /* Light text */
-            overflow: hidden; /* Prevent scrolling the main page */
-        }
+    <style> 
+        /* Custom styles for the presentation */ 
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #111827; /* Dark background */ 
+            color: #F9FAFB; /* Light text */ 
+            overflow: hidden; /* Prevent scrolling the main page */ 
+        } 
 
-        /* Each slide is a flex container centered on the screen */
-        .slide {
-            width: 100%;
-            height: 100vh;
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 4rem;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-            opacity: 0;
-            transform: scale(0.95);
-        }
+        /* Each slide is a flex container centered on the screen */ 
+        .slide { 
+            width: 100%; 
+            height: 100vh; 
+            display: none; /* Hidden by default */ 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 4rem; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; 
+            opacity: 0; 
+            transform: scale(0.95); 
+        } 
 
-        /* The active slide is visible and scaled to normal */
-        .slide.active {
-            display: flex;
-            opacity: 1;
-            transform: scale(1);
-            z-index: 10;
-        }
+        /* The active slide is visible and scaled to normal */ 
+        .slide.active { 
+            display: flex; 
+            opacity: 1; 
+            transform: scale(1); 
+            z-index: 10; 
+        } 
 
-        /* Animation for elements within a slide (fragments) */
-        .fragment {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        
-        .fragment.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Animation for elements within a slide (fragments) */ 
+        .fragment { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out; 
+        } 
+         
+        .fragment.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        } 
 
-        /* Styling for the navigation buttons */
-        .nav-button {
-            position: fixed;
-            z-index: 100;
-            bottom: 2rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.75rem;
-            border-radius: 9999px;
-        _BORDERS_
-            transition: background-color 0.2s;
-        }
-        .nav-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        #prev-slide { right: 6rem; }
-        #next-slide { right: 2rem; }
+        /* Styling for the navigation buttons */ 
+        .nav-button { 
+            position: fixed; 
+            z-index: 100; 
+            bottom: 2rem; 
+            background-color: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: white; 
+            padding: 0.75rem; 
+            border-radius: 9999px; 
+            cursor: pointer; 
+            transition: background-color 0.2s; 
+        } 
+        .nav-button:hover { 
+            background-color: rgba(255, 255, 255, 0.2); 
+        } 
+        #prev-slide { right: 6rem; } 
+        #next-slide { right: 2rem; } 
 
-        /* Progress dots styling */
-        #progress-dots {
-            position: fixed;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            display: flex;
-            gap: 0.75rem;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transition: background-color 0.3s;
-        }
-        .dot.active {
-            background-color: #4F46E5; /* Indigo */
-        }
-        
-        /* Custom code block styling */
-        pre.code-block {
-            background-color: #1F2937; /* Gray-800 */
-            border-radius: 0.5rem;
-            padding: 1rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            width: 100%;
-            height: 100%;
-            border: 1px solid #374151; /* Gray-700 */
-            overflow-x: auto;
-            white-space: pre-wrap; /* Wrap long lines */
-        }
-        pre.code-block code span.highlight {
-            color: #FBBF24; /* Amber-400 */
-        }
-        pre.code-block code span.comment {
-            color: #9CA3AF; /* Gray-400 */
-        }
-    </style>
-</head>
-<body>
+        /* Progress dots styling */ 
+        #progress-dots { 
+            position: fixed; 
+            bottom: 2.5rem; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 100; 
+            display: flex; 
+            gap: 0.75rem; 
+        } 
+        .dot { 
+            width: 12px; 
+            height: 12px; 
+            background-color: rgba(255, 255, 255, 0.2); 
+            border-radius: 50%; 
+            transition: background-color 0.3s; 
+        } 
+        .dot.active { 
+            background-color: #4F46E5; /* Indigo */ 
+        } 
+         
+        /* Custom code block styling */ 
+        pre.code-block { 
+            background-color: #1F2937; /* Gray-800 */ 
+            border-radius: 0.5rem; 
+            padding: 1rem; 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+            width: 100%; 
+            height: 100%; 
+            border: 1px solid #374151; /* Gray-700 */ 
+            overflow-x: auto; 
+            white-space: pre-wrap; /* Wrap long lines */ 
+        } 
+        pre.code-block code span.highlight { 
+            color: #FBBF24; /* Amber-400 */ 
+        } 
+        pre.code-block code span.comment { 
+            color: #9CA3AF; /* Gray-400 */ 
+        } 
+    </style> 
+</head> 
+<body> 
 
-        <section class="slide active">
-        <div class="text-center">
-            <h1 class="text-6xl font-bold text-white tracking-tight">Vom Prompt zum Fragepool</h1>
-            <h2 class="mt-4 text-3xl font-medium text-gray-300">Automatische Generierung von Fragen in OLAT-Format</h2>
-            <p class="mt-12 text-xl text-gray-400">Pietro Rossi</p>
-            <p class="mt-2 text-base text-gray-500">BBW.ch</p>
-            <p class="absolute bottom-8 left-8 text-sm text-gray-600">Interaktives Design von Gemini</p>
-        </div>
-    </section>
+    <!-- SLIDE 0: Title Slide --> 
+    <section class="slide active"> 
+        <div class="text-center"> 
+            <h1 class="text-6xl font-bold text-white tracking-tight">Vom Prompt zum Fragepool</h1> 
+            <h2 class="mt-4 text-3xl font-medium text-gray-300">Automatische Generierung von Fragen in OLAT-Format</h2> 
+            <p class="mt-12 text-xl text-gray-400">Pietro Rossi</p> 
+            <p class="mt-2 text-base text-gray-500">BBW.ch</p> 
+            <p class="absolute bottom-8 left-8 text-sm text-gray-600">Interaktives Design von Gemini</p> 
+        </div> 
+    </section> 
 
-        <section class="slide">
-        <div class="text-center w-full max-w-4xl">
-            <h2 class="text-5xl font-bold mb-12">Wer ist heute hier?</h2>
-            <div class="space-y-8 text-2xl text-gray-200">
-                                <div class="fragment">
-                    <p>Bitte aufstehen: Wer ist <strong>OLAT-Autor</strong> und erstellt Inhalte?</p>
-                </div>
-                <div class="fragment">
-                    <p>Bitte aufstehen: Wer ist <strong>OLAT-Anwender/Admin</strong> und konfiguriert Kurse?</p>
-                </div>
-                <div class="fragment">
-                    <p class="text-indigo-400">Stehen bleiben, wenn Sie <strong>beides</strong> tun!</p>
-                </div>
-                                <div class="fragment mt-6">
-                    <p>Bitte aufstehen: Wer nutzt aktiv eine <strong>KI mit Abo</strong> (ChatGPT Plus, Gemini Advanced, etc.)?</p>
-                </div>
-          _BORDERS_
-                <div class="fragment mt-6">
-                    <p>Und zuletzt: Wer weiss, was ein <strong>API-Schlüssel</strong> ist und hat schon einen verwendet?</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- SLIDE 1: Icebreaker --> 
+    <section class="slide"> 
+        <div class="text-center w-full max-w-4xl"> 
+            <h2 class="text-5xl font-bold mb-12">Wer ist heute hier?</h2> 
+            <div class="space-y-8 text-2xl text-gray-200"> 
+                <!-- Slot 1: Each point gets its own fragment --> 
+                <div class="fragment"> 
+                    <p>Bitte aufstehen: Wer ist <strong>OLAT-Autor</strong> und erstellt Inhalte?</p> 
+                </div> 
+                <div class="fragment"> 
+                    <p>Bitte aufstehen: Wer ist <strong>OLAT-Anwender/Admin</strong> und konfiguriert Kurse?</p> 
+                </div> 
+                <div class="fragment"> 
+                    <p class="text-indigo-400">Stehen bleiben, wenn Sie <strong>beides</strong> tun!</p> 
+                </div> 
+                <!-- Slot 2 --> 
+                <div class="fragment mt-6"> 
+                    <p>Bitte aufstehen: Wer nutzt aktiv eine <strong>KI mit Abo</strong> (ChatGPT Plus, Gemini Advanced, etc.)?</p> 
+                </div> 
+                <!-- Slot 3 --> 
+                <div class="fragment mt-6"> 
+                    <p>Und zuletzt: Wer weiss, was ein <strong>API-Schlüssel</strong> ist und hat schon einen verwendet?</p> 
+                </div> 
+            </div> 
+        </div> 
+    </section> 
 
-<section class="slide">
-    <div class="w-full max-w-6xl h-full flex flex-col justify-between">
-        <h2 class="text-5xl font-bold mb-12 text-center">Die Werkzeugkiste</h2>
-        <div class="flex flex-col md:flex-row items-start gap-12 flex-grow">
-                        <div class="flex-1 flex flex-col items-center">
-                <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3>
-                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-48 mb-4"
-                    onerror="this.onerror=null;this.src='https://placehold.co/800x300/111827/374151?text=logos_main.png';">
-            </div>
-                        <div class="flex-1 flex flex-col items-center md:items-start">
-                <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3>
-                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-32 mb-4"
-                    onerror="this.onerror=null;this.src='https://placehold.co/600x200/111827/374151?text=logos_alternatives.png';">
-            </div>
-        </div>
-                <div class="flex justify-center mt-8 mb-4">
-            <ul class="space-y-3 text-lg text-gray-300 list-disc list-inside text-center max-w-2xl">
-                <li><strong>GPT-4o/4.1:</strong> Der qualitative Alleskönner für komplexe Textaufgaben.</li>
-                <li><strong>Gemini 2.0/2.5:</strong> Der Multimedia-Spezialist für Audio- & Video-Inputs.</li>
-                <li><strong>Claude/DeepSeek:</strong> Starke Alternativen für spezifische Aufgaben und Kosteneffizienz.</li>
-            </ul>
-        </div>
-    </div>
-</section>
+<!-- SLIDE 2: The Models --> 
+<section class="slide"> 
+    <div class="w-full max-w-6xl h-full flex flex-col justify-between"> 
+        <h2 class="text-5xl font-bold mb-12 text-center">Die Werkzeugkiste</h2> 
+        <div class="flex flex-col md:flex-row items-start gap-12 flex-grow"> 
+            <!-- Left side: Main Models --> 
+            <div class="flex-1 flex flex-col items-center"> 
+                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-24 mb-4" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/400x150/111827/374151?text=logos_main.png';"> 
+                <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3> 
+            </div> 
+            <!-- Right side: Other Models & Description --> 
+            <div class="flex-1 flex flex-col items-center md:items-start"> 
+                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-16 mb-4" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/300x100/111827/374151?text=logos_alternatives.png';"> 
+                <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3> 
+            </div> 
+        </div> 
+        <!-- Centered bulletpoints at the bottom --> 
+        <div class="flex justify-center mt-8 mb-4"> 
+            <ul class="space-y-3 text-lg text-gray-300 list-disc list-inside text-center max-w-2xl"> 
+                <li><strong>GPT-4o/4.1:</strong> Der qualitative Alleskönner für komplexe Textaufgaben.</li> 
+                <li><strong>Gemini 2.0/2.5:</strong> Der Multimedia-Spezialist für Audio- & Video-Inputs.</li> 
+                <li><strong>Claude/DeepSeek:</strong> Starke Alternativen für spezifische Aufgaben und Kosteneffizienz.</li> 
+            </ul> 
+        </div> 
+    </div> 
+</section> 
 
-        <section class="slide">
-        <div class="w-full max-w-6xl h-full flex flex-col">
-            <h2 class="text-5xl font-bold mb-8 text-center shrink-0">Prompt Engineering: Mehr als ein Modewort?</h2>
-            <div class="flex-grow flex flex-col md:flex-row gap-8 min-h-0">
-                                <div class="flex-1 flex flex-col">
-                    <h3 class="text-2xl font-semibold mb-4 text-center text-red-400">Vorher</h3>
-                    <iframe src="https://chatgpt.com/share/685a3551-e650-8006-abf1-c8dc47811655/embed?theme=dark" 
-                            style="width: 100%; height: 600px; border-radius: 0.5rem; border: 1px solid #374151;"
-              _BORDERS_tle="Simple prompt in ChatGPT"></iframe>
-                </div>
-                                <div class="flex-1 flex flex-col">
-                  <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3>
-                  <div id="mdBox" style="height: 600px; overflow-y: auto; border: 1px solid #374151; background: #18181b; color: #d1d5db; border-radius: 8px; padding: 1em;">
-                    Lade Inhalt...
-                  </div>
-                  <a href="https://github.com/rossipietro/prezis/blob/main/olat_fragengenerator/texts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400">
-                    Link zum Prompt auf GitHub
-                  </a>
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-                <script>
-                fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/olat_fragengenerator/texts/single_choice.md')
-                  .then(res => res.text())
-                  .then(md => {
-                    document.getElementById('mdBox').innerHTML = marked.parse(md);
-                  });
-                </script>
-            </div>
-        </div>
-    </section>
+    <!-- SLIDE 3: Prompt Engineering --> 
+    <section class="slide"> 
+        <div class="w-full max-w-6xl h-full flex flex-col"> 
+            <h2 class="text-5xl font-bold mb-8 text-center shrink-0">Prompt Engineering: Mehr als ein Modewort?</h2> 
+            <div class="flex-grow flex flex-col md:flex-row gap-8 min-h-0"> 
+                <!-- Before --> 
+                <div class="flex-1 flex flex-col"> 
+                    <h3 class="text-2xl font-semibold mb-4 text-center text-red-400">Vorher</h3> 
+                    <img src="img/presentation/prompt_before.png"  
+                         alt="Simple prompt in ChatGPT"  
+                         style="width: 100%; height: 600px; object-fit: contain; border-radius: 0.5rem; border: 1px solid #374151;" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x450/1F2937/4B5563?text=Screenshot+von+simplem+Prompt';"> 
+                </div> 
+                <!-- After --> 
+                <div class="flex-1 flex flex-col"> 
+                  <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3> 
+                  <div id="mdBox" style="height: 600px; overflow-y: auto; border: 1px solid #374151; background: #18181b; color: #d1d5db; border-radius: 8px; padding: 1em;"> 
+                    Lade Inhalt... 
+                  </div> 
+                  <a href="https://github.com/rossipietro/prezis/blob/main/olat_fragengenerator/texts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400"> 
+                    Link zum Prompt auf GitHub 
+                  </a> 
+                </div> 
+                <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
+                <script> 
+                fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/olat_fragengenerator/texts/single_choice.md') 
+                  .then(res => res.text()) 
+                  .then(md => { 
+                    document.getElementById('mdBox').innerHTML = marked.parse(md); 
+                  }); 
+                </script> 
+            </div> 
+        </div> 
+    </section> 
 
-        <section class="slide">
-      <div class="w-full max-w-6xl flex flex-col items-center">
-                <div class="w-full md:w-5/6 flex flex-col justify-center">
-          <iframe 
-            src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html"
-            width="100%"
-            height="400"
-            style="border: 1px solid #374151; border-radius: 0.5rem; background: #18181b;"
-            title="Flow Diagram">
-          </iframe>
-          <div class="text-center mt-2 text-xs text-gray-400">
-            <a href="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" target="_blank" class="hover:text-indigo-400">
-              Flow-Diagramm als eigene Seite öffnen
-            </a>
-          </div>
-        </div>
-                <div class="mt-12 text-center max-w-4xl">
-          <h2 class="text-5xl font-bold mb-8">Vom Prompt zur Systemarchitektur</h2>
-          <p class="text-xl text-gray-300 mb-4">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p>
-          <p class="text-lg text-gray-400">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p>
-        </div>
-      </div>
-    </section>
-    
-        <section class="slide">
-        <div class="w-full max-w-7xl h-full flex flex-col">
-            <h2 class="text-5xl font-bold mb-6 text-center shrink-0">Tool 1: Der Python-Prototyp</h2>
-            <div class="flex-grow rounded-lg overflow-hidden border-2 border-cyan-500 shadow-2xl">
-                                 <iframe src="https://olatimport.streamlit.app/?embed=true" 
-                        class="w-full h-full" 
-                        title="Live Demo of Streamlit Tool"></iframe>
-            </div>
-            <a href="https://olatimport.streamlit.app/" target="_blank" class="text-center mt-3 text-sm text-gray-400 hover:text-cyan-400 shrink-0">
-                Falls das Fenster nicht lädt, hier klicken, um es direkt zu öffnen.
-            </a>
-        </div>
-    </section>
+    <!-- SLIDE 4: Architecture --> 
+    <section class="slide"> 
+      <div class="w-full max-w-6xl flex flex-col md:flex-row items-stretch"> 
+        <!-- LEFT: Texts --> 
+        <div class="md:w-1/2 flex flex-col justify-between"> 
+          <div> 
+            <h2 class="text-5xl font-bold mb-12 text-left">Vom Prompt zur Systemarchitektur</h2> 
+            <p class="text-xl text-gray-300 mb-8 text-left">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
+          </div> 
+          <p class="mt-8 text-lg text-gray-400 text-left">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p> 
+        </div> 
+        <!-- RIGHT: Iframe --> 
+        <div class="md:w-1/2 flex flex-col justify-center mt-8 md:mt-0 md:pl-8"> 
+          <iframe  
+            src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" 
+            width="100%" 
+            height="400" 
+            style="border: 1px solid #374151; border-radius: 0.5rem; background: #18181b;" 
+            title="Flow Diagram"> 
+          </iframe> 
+          <div class="text-center mt-2 text-xs text-gray-400"> 
+            <a href="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" target="_blank" class="hover:text-indigo-400"> 
+              Flow-Diagramm als eigene Seite öffnen 
+            </a> 
+          </div> 
+        </div> 
+      </div> 
+    </section> 
 
-        <section class="slide">
-        <div class="w-full max-w-7xl h-full flex flex-col">
-            <h2 class="text-5xl font-bold mb-6 text-center shrink-0">Tool 2: Die Multi-LLM Web App</h2>
-            <div class="flex-grow rounded-lg overflow-hidden border-2 border-indigo-500 shadow-2xl">
-                                <iframe src="https://rossipietro.github.io/olat/multiLLM.html" class="w-full h-full" title="Live Demo of Multi-LLM Tool"></iframe>
-            </div>
-             <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-center mt-3 text-sm text-gray-400 hover:text-indigo-400 shrink-0">
-                Falls das Fenster nicht lädt, hier klicken, um es direkt zu öffnen.
-            </a>
-        </div>
-    </section>
+     
+    <!-- SLIDE 5: Tool 1 (Python) with Live Embed --> 
+    <section class="slide"> 
+        <div class="w-full max-w-7xl h-full flex flex-col"> 
+            <h2 class="text-5xl font-bold mb-6 text-center shrink-0">Tool 1: Der Python-Prototyp</h2> 
+            <div class="flex-grow rounded-lg overflow-hidden border-2 border-cyan-500 shadow-2xl"> 
+                 <!--  
+                    LIVE EMBED: 
+                    This iframe will load your live Streamlit tool. 
+                --> 
+                <iframe src="https://olatimport.streamlit.app/?embed=true"  
+                        class="w-full h-full"  
+                        title="Live Demo of Streamlit Tool"></iframe> 
+            </div> 
+            <a href="https://olatimport.streamlit.app/" target="_blank" class="text-center mt-3 text-sm text-gray-400 hover:text-cyan-400 shrink-0"> 
+                Falls das Fenster nicht lädt, hier klicken, um es direkt zu öffnen. 
+            </a> 
+        </div> 
+    </section> 
 
-        <section class="slide">
-        <div class="w-full max-w-5xl text-center">
-            <h2 class="text-5xl font-bold mb-12">Das Ökosystem wächst: Der Browser als Wissensquelle</h2>
-            <img src="img/presentation/extension.png" 
-                 alt="Screenshot der Chrome Extension im Web Store" 
-                 class="mx-auto rounded-lg shadow-2xl border-2 border-gray-700 mb-6"
-                 onerror="this.onerror=null;this.src='https://placehold.co/900x600/1F2937/4B5563?text=extension.png';">
-            <a href="https://chromewebstore.google.com/detail/%F0%9F%93%9D-multi-llm-olat-fragen/kfcodcbeipnhgclmhicjcfhmephdnbma?authuser=0&hl=de" 
-               target="_blank" 
-               class="inline-block px-6 py-3 mt-4 text-white bg-indigo-600 rounded shadow-lg text-lg font-semibold hover:bg-indigo-500 transition">
-                Extension im Chrome Web Store ansehen
-            </a>
-            <p class="mt-3 text-xs text-gray-500">https://chromewebstore.google.com/detail/multi-llm-olat-fragen/kfcodcbeipnhgclmhicjcfhmephdnbma</p>
-        </div>
-    </section>
 
-        <section class="slide">
-        <div class="w-full max-w-6xl">
-            <h2 class="text-5xl font-bold mb-12 text-center">Zukunft & Fragen</h2>
-            <div class="flex flex-col md:flex-row gap-12 items-center">
-                                <div class="flex-1">
-                    <h3 class="text-3xl font-semibold mb-6">Ausblick: Mehr Struktur & Reliabilität</h3>
-                    <ul class="space-y-4 text-lg text-gray-300">
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H7a2 2 0 00-2 2v2m14 0h-2M5 11H3"></path></svg>
-                            <span><strong>JSON-Modus:</strong> Nutzung des nativen JSON-Outputs der LLMs, um die Zuverlässigkeit zu maximieren und Verarbeitungsfehler zu eliminieren.</span>
-                        </li>
-                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                            <span><strong>Open Source:</strong> Die Tools sind auf GitHub verfügbar. Feedback, Ideen und Beiträge sind herzlich willkommen.<br>
-                                <a href="https://olatimport.streamlit.app/" target="_blank" class="text-cyan-400 hover:underline">Fragengenerator Streamlit</a>, 
-                                <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-indigo-400 hover:underline">MulitLLM App</a>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                                <div class="flex-1 text-center fragment">
-                    <h3 class="text-6xl font-bold text-white">Fragen?</h3>
-                    <p class="mt-4 text-lg">Pietro Rossi | pietro.rossi@bbw.ch</p>
-                                        <img src="img/presentation/qr_code_tool2.png" 
-                         alt="QR Code to live tool" 
-                         class="mx-auto mt-6 rounded-lg"
-                         onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';">
-                    <p class="mt-2 text-gray-400">Tool jetzt ausprobieren!</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- SLIDE 6: Tool 2 (JavaScript) with Live Embed --> 
+    <section class="slide"> 
+        <div class="w-full max-w-7xl h-full flex flex-col"> 
+            <h2 class="text-5xl font-bold mb-6 text-center shrink-0">Tool 2: Die Multi-LLM Web App</h2> 
+            <div class="flex-grow rounded-lg overflow-hidden border-2 border-indigo-500 shadow-2xl"> 
+                <!--  
+                    LIVE EMBED: 
+                    This iframe will load your live tool. Replace the src with your actual GitHub Pages URL. 
+                --> 
+                <iframe src="https://rossipietro.github.io/olat/multiLLM.html" class="w-full h-full" title="Live Demo of Multi-LLM Tool"></iframe> 
+            </div> 
+             <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-center mt-3 text-sm text-gray-400 hover:text-indigo-400 shrink-0"> 
+                Falls das Fenster nicht lädt, hier klicken, um es direkt zu öffnen. 
+            </a> 
+        </div> 
+    </section> 
 
-        <button id="prev-slide" class="nav-button">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-    </button>
-    <button id="next-slide" class="nav-button">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-    </button>
+    <!-- SLIDE 7: Chrome Extension --> 
+    <section class="slide"> 
+        <div class="w-full max-w-5xl text-center"> 
+            <h2 class="text-5xl font-bold mb-12">Das Ökosystem wächst: Der Browser als Wissensquelle</h2> 
+            <img src="img/presentation/extension.png"  
+                 alt="Screenshot der Chrome Extension im Web Store"  
+                 class="mx-auto rounded-lg shadow-2xl border-2 border-gray-700 mb-6" 
+                 onerror="this.onerror=null;this.src='https://placehold.co/900x600/1F2937/4B5563?text=extension.png';"> 
+            <a href="https://chromewebstore.google.com/detail/%F0%9F%93%9D-multi-llm-olat-fragen/kfcodcbeipnhgclmhicjcfhmephdnbma?authuser=0&hl=de"  
+               target="_blank"  
+               class="inline-block px-6 py-3 mt-4 text-white bg-indigo-600 rounded shadow-lg text-lg font-semibold hover:bg-indigo-500 transition"> 
+                Extension im Chrome Web Store ansehen 
+            </a> 
+        </div> 
+    </section> 
 
-        <div id="progress-dots"></div>
+    <!-- SLIDE 8: Future & Q&A --> 
+    <section class="slide"> 
+        <div class="w-full max-w-6xl"> 
+            <h2 class="text-5xl font-bold mb-12 text-center">Zukunft & Fragen</h2> 
+            <div class="flex flex-col md:flex-row gap-12 items-center"> 
+                <!-- Left: Next Steps --> 
+                <div class="flex-1"> 
+                    <h3 class="text-3xl font-semibold mb-6">Ausblick: Mehr Struktur & Reliabilität</h3> 
+                    <ul class="space-y-4 text-lg text-gray-300"> 
+                        <li class="flex items-start"> 
+                            <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H7a2 2 0 00-2 2v2m14 0h-2M5 11H3"></path></svg> 
+                            <span><strong>JSON-Modus:</strong> Nutzung des nativen JSON-Outputs der LLMs, um die Zuverlässigkeit zu maximieren und Verarbeitungsfehler zu eliminieren.</span> 
+                        </li> 
+                         <li class="flex items-start"> 
+                            <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg> 
+                            <span><strong>Open Source:</strong> Die Tools sind auf GitHub verfügbar. Feedback, Ideen und Beiträge sind herzlich willkommen.</span> 
+                        </li> 
+                    </ul> 
+                </div> 
+                <!-- Right: Q&A and QR Code --> 
+                <div class="flex-1 text-center"> 
+                    <h3 class="text-6xl font-bold text-white">Fragen?</h3> 
+                    <p class="mt-4 text-lg">Pietro Rossi | pietro.rossi@bbw.ch</p> 
+                    <!--  
+                        QR CODE PLACEHOLDER:  
+                        Generate a QR code that links to your live tool (https://rossipietro.github.io/olat/multiLLM.html). 
+                        Save it as 'img/presentation/qr_code_tool2.png' 
+                    --> 
+                    <img src="img/presentation/qr_code_tool2.png"  
+                         alt="QR Code to live tool"  
+                         class="mx-auto mt-6 rounded-lg" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';"> 
+                    <p class="mt-2 text-gray-400">Tool jetzt ausprobieren!</p> 
+                </div> 
+            </div> 
+        </div> 
+    </section> 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.slide');
-            const prevButton = document.getElementById('prev-slide');
-            const nextButton = document.getElementById('next-slide');
-            const progressDotsContainer = document.getElementById('progress-dots');
-            let currentSlideIndex = 0;
+    <!-- Navigation Buttons --> 
+    <button id="prev-slide" class="nav-button"> 
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
+    </button> 
+    <button id="next-slide" class="nav-button"> 
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> 
+    </button> 
 
-            // Create progress dots
-            slides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                dot.addEventListener('click', () => goToSlide(index));
-                progressDotsContainer.appendChild(dot);
-            });
-            const dots = document.querySelectorAll('.dot');
+    <!-- Progress Dots --> 
+    <div id="progress-dots"></div> 
 
-            function showNextFragment() {
-                const currentSlide = slides[currentSlideIndex];
-                const fragments = currentSlide.querySelectorAll('.fragment:not(.visible)');
-                if (fragments.length > 0) {
-                    fragments[0].classList.add('visible');
-                    return true; // A fragment was shown
-                }
-                return false; // No more fragments to show
-            }
+    <script> 
+        document.addEventListener('DOMContentLoaded', () => { 
+            const slides = document.querySelectorAll('.slide'); 
+            const prevButton = document.getElementById('prev-slide'); 
+            const nextButton = document.getElementById('next-slide'); 
+            const progressDotsContainer = document.getElementById('progress-dots'); 
+            let currentSlideIndex = 0; 
 
-            function hideLastFragment() {
-                const currentSlide = slides[currentSlideIndex];
-                const visibleFragments = currentSlide.querySelectorAll('.fragment.visible');
-                 if (visibleFragments.length > 0) {
-                    visibleFragments[visibleFragments.length - 1].classList.remove('visible');
-                    return true; // A fragment was hidden
-                }
-                return false; // No fragments to hide
-            }
+            // Create progress dots 
+            slides.forEach((_, index) => { 
+                const dot = document.createElement('div'); 
+                dot.classList.add('dot'); 
+                dot.addEventListener('click', () => goToSlide(index)); 
+                progressDotsContainer.appendChild(dot); 
+            }); 
+            const dots = document.querySelectorAll('.dot'); 
 
-            function goToSlide(index) {
-                // Boundary checks
-                if (index >= slides.length || index < 0) return;
+            function showNextFragment() { 
+                const currentSlide = slides[currentSlideIndex]; 
+                const fragments = currentSlide.querySelectorAll('.fragment:not(.visible)'); 
+                if (fragments.length > 0) { 
+                    fragments[0].classList.add('visible'); 
+                    return true; // A fragment was shown 
+                } 
+                return false; // No more fragments to show 
+            } 
 
-                // Deactivate all slides and fragments
-                slides.forEach(slide => {
-                    slide.classList.remove('active');
-                    slide.querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
-                });
+            function hideLastFragment() { 
+                const currentSlide = slides[currentSlideIndex]; 
+                const visibleFragments = currentSlide.querySelectorAll('.fragment.visible'); 
+                 if (visibleFragments.length > 0) { 
+                    visibleFragments[visibleFragments.length - 1].classList.remove('visible'); 
+                    return true; // A fragment was hidden 
+                } 
+                return false; // No fragments to hide 
+            } 
 
-                // Activate the new slide
-                slides[index].classList.add('active');
-                currentSlideIndex = index;
-  _BORDERS_       
-                // Update progress dots
-                dots.forEach((dot, dotIndex) => {
-                    dot.classList.toggle('active', dotIndex === index);
-                });
-            }
+            function goToSlide(index) { 
+                // Boundary checks 
+                if (index >= slides.length || index < 0) return; 
 
-            function nextStep() {
-                if (!showNextFragment()) {
-                    goToSlide(currentSlideIndex + 1);
-                }
-            }
+                // Deactivate all slides and fragments 
+                slides.forEach(slide => { 
+                    slide.classList.remove('active'); 
+                    slide.querySelectorAll('.fragment').forEach(f => f.classList.remove('visible')); 
+                }); 
 
-            function prevStep() {
-                 if (!hideLastFragment()) {
-                    goToSlide(currentSlideIndex - 1);
-                }
-            }
+                // Activate the new slide 
+                slides[index].classList.add('active'); 
+                currentSlideIndex = index; 
+                 
+                // Update progress dots 
+                dots.forEach((dot, dotIndex) => { 
+                    dot.classList.toggle('active', dotIndex === index); 
+                }); 
+            } 
 
-            // Event Listeners
-            nextButton.addEventListener('click', nextStep);
-            prevButton.addEventListener('click', prevStep);
+            function nextStep() { 
+                if (!showNextFragment()) { 
+                    goToSlide(currentSlideIndex + 1); 
+                } 
+            } 
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') {
-                    nextStep();
-                } else if (e.key === 'ArrowLeft') {
-                    prevStep();
-                }
-            });
+            function prevStep() { 
+                 if (!hideLastFragment()) { 
+                    goToSlide(currentSlideIndex - 1); 
+                } 
+            } 
 
-            // Initial setup
-            goToSlide(0);
-        });
-    </script>
-</body>
-</html>
+            // Event Listeners 
+            nextButton.addEventListener('click', nextStep); 
+            prevButton.addEventListener('click', prevStep); 
+
+            document.addEventListener('keydown', (e) => { 
+                if (e.key === 'ArrowRight') { 
+                    nextStep(); 
+                } else if (e.key === 'ArrowLeft') { 
+                    prevStep(); 
+                } 
+            }); 
+
+            // Initial setup 
+            goToSlide(0); 
+        }); 
+    </script> 
+</body> 
+</html> 
+
