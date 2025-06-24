@@ -167,15 +167,15 @@
         <div class="flex flex-col md:flex-row items-start gap-12 flex-grow"> 
             <!-- Left side: Main Models --> 
             <div class="flex-1 flex flex-col items-center"> 
-                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-24 mb-4" 
-                    onerror="this.onerror=null;this.src='https://placehold.co/400x150/111827/374151?text=logos_main.png';"> 
-                <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3> 
+                <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3>
+                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-48 mb-4" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/400x300/111827/374151?text=logos_main.png';"> 
             </div> 
             <!-- Right side: Other Models & Description --> 
             <div class="flex-1 flex flex-col items-center md:items-start"> 
-                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-16 mb-4" 
-                    onerror="this.onerror=null;this.src='https://placehold.co/300x100/111827/374151?text=logos_alternatives.png';"> 
-                <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3> 
+                <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3>
+                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-32 mb-4" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/300x200/111827/374151?text=logos_alternatives.png';"> 
             </div> 
         </div> 
         <!-- Centered bulletpoints at the bottom --> 
@@ -197,15 +197,16 @@
                 <!-- Before --> 
                 <div class="flex-1 flex flex-col"> 
                     <h3 class="text-2xl font-semibold mb-4 text-center text-red-400">Vorher</h3> 
-                    <img src="img/presentation/prompt_before.png"  
-                         alt="Simple prompt in ChatGPT"  
-                         style="width: 100%; height: 600px; object-fit: contain; border-radius: 0.5rem; border: 1px solid #374151;" 
-                         onerror="this.onerror=null;this.src='https://placehold.co/600x450/1F2937/4B5563?text=Screenshot+von+simplem+Prompt';"> 
+                    <iframe 
+                        src="https://chatgpt.com/share/685a3551-e650-8006-abf1-c8dc47811655" 
+                        style="width:100%; height:600px; border:1px solid #374151; border-radius:0.5rem;"
+                        title="ChatGPT Prompt Example">
+                    </iframe>
                 </div> 
                 <!-- After --> 
                 <div class="flex-1 flex flex-col"> 
                   <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3> 
-                  <div id="mdBox" style="height: 600px; overflow-y: auto; border: 1px solid #374151; background: #18181b; color: #d1d5db; border-radius: 8px; padding: 1em;"> 
+                  <div id="mdBox" style="height:600px; overflow-y:auto; border:1px solid #374151; background:#18181b; color:#d1d5db; border-radius:8px; padding:1em;"> 
                     Lade Inhalt... 
                   </div> 
                   <a href="https://github.com/rossipietro/prezis/blob/main/olat_fragengenerator/texts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400"> 
@@ -226,29 +227,23 @@
 
     <!-- SLIDE 4: Architecture --> 
     <section class="slide"> 
-      <div class="w-full max-w-6xl flex flex-col md:flex-row items-stretch"> 
-        <!-- LEFT: Texts --> 
-        <div class="md:w-1/2 flex flex-col justify-between"> 
-          <div> 
-            <h2 class="text-5xl font-bold mb-12 text-left">Vom Prompt zur Systemarchitektur</h2> 
-            <p class="text-xl text-gray-300 mb-8 text-left">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
-          </div> 
-          <p class="mt-8 text-lg text-gray-400 text-left">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p> 
-        </div> 
-        <!-- RIGHT: Iframe --> 
-        <div class="md:w-1/2 flex flex-col justify-center mt-8 md:mt-0 md:pl-8"> 
-          <iframe  
-            src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" 
-            width="100%" 
-            height="400" 
-            style="border: 1px solid #374151; border-radius: 0.5rem; background: #18181b;" 
-            title="Flow Diagram"> 
-          </iframe> 
-          <div class="text-center mt-2 text-xs text-gray-400"> 
-            <a href="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" target="_blank" class="hover:text-indigo-400"> 
-              Flow-Diagramm als eigene Seite öffnen 
-            </a> 
-          </div> 
+      <div class="w-full max-w-6xl flex flex-col"> 
+        <h2 class="text-5xl font-bold mb-12 text-center">Vom Prompt zur Systemarchitektur</h2> 
+        <iframe  
+          src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" 
+          width="100%" 
+          height="400" 
+          style="border:1px solid #374151; border-radius:0.5rem; background:#18181b;" 
+          title="Flow Diagram"> 
+        </iframe> 
+        <div class="mt-2 space-y-2"> 
+          <p class="text-lg text-gray-300">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
+          <p class="text-lg text-gray-300">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p> 
+        </div>
+        <div class="text-center mt-2 text-xs text-gray-400"> 
+          <a href="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" target="_blank" class="hover:text-indigo-400"> 
+            Flow-Diagramm als eigene Seite öffnen 
+          </a> 
         </div> 
       </div> 
     </section> 
@@ -285,7 +280,7 @@
                 --> 
                 <iframe src="https://rossipietro.github.io/olat/multiLLM.html" class="w-full h-full" title="Live Demo of Multi-LLM Tool"></iframe> 
             </div> 
-             <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-center mt-3 text-sm text-gray-400 hover:text-indigo-400 shrink-0"> 
+             <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-center mt-3 text-sm text-gray-400 hover:text-indigo-400"> 
                 Falls das Fenster nicht lädt, hier klicken, um es direkt zu öffnen. 
             </a> 
         </div> 
@@ -311,9 +306,9 @@
     <section class="slide"> 
         <div class="w-full max-w-6xl"> 
             <h2 class="text-5xl font-bold mb-12 text-center">Zukunft & Fragen</h2> 
-            <div class="flex flex-col md:flex-row gap-12 items-center"> 
+            <div class="flex flex-col md:flex-row gap-12 items-start"> 
                 <!-- Left: Next Steps --> 
-                <div class="flex-1"> 
+                <div class="flex-1 fragment"> 
                     <h3 class="text-3xl font-semibold mb-6">Ausblick: Mehr Struktur & Reliabilität</h3> 
                     <ul class="space-y-4 text-lg text-gray-300"> 
                         <li class="flex items-start"> 
@@ -322,12 +317,15 @@
                         </li> 
                          <li class="flex items-start"> 
                             <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg> 
-                            <span><strong>Open Source:</strong> Die Tools sind auf GitHub verfügbar. Feedback, Ideen und Beiträge sind herzlich willkommen.</span> 
+                            <span><strong>Open Source:</strong> Die Tools sind auf GitHub verfügbar. Feedback, Ideen und Beiträge sind herzlich willkommen: 
+                                <a href="https://olatimport.streamlit.app/" target="_blank" class="text-indigo-300 hover:underline">Fragengenerator Streamlit</a>, 
+                                <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-indigo-300 hover:underline">MultiLLM App</a>
+                            </span> 
                         </li> 
                     </ul> 
                 </div> 
                 <!-- Right: Q&A and QR Code --> 
-                <div class="flex-1 text-center"> 
+                <div class="flex-1 text-center fragment"> 
                     <h3 class="text-6xl font-bold text-white">Fragen?</h3> 
                     <p class="mt-4 text-lg">Pietro Rossi | pietro.rossi@bbw.ch</p> 
                     <!--  
@@ -443,4 +441,3 @@
     </script> 
 </body> 
 </html> 
-
