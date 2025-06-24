@@ -14,19 +14,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"> 
 
     <style> 
-        /* Custom styles for the presentation */ 
+        /* Custom styles für die Präsentation */ 
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #111827; /* Dark background */ 
-            color: #F9FAFB; /* Light text */ 
-            overflow: hidden; /* Prevent scrolling the main page */ 
+            background-color: #111827; /* Dunkler Hintergrund */ 
+            color: #F9FAFB; /* Heller Text */ 
+            overflow: hidden; /* Kein Scrollen auf der Hauptseite */ 
         } 
 
-        /* Each slide is a flex container centered on the screen */ 
+        /* Jede Folie ist ein Flex-Container zentriert auf dem Bildschirm */ 
         .slide { 
             width: 100%; 
             height: 100vh; 
-            display: none; /* Hidden by default */ 
+            display: none; /* Standardmäßig versteckt */ 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
@@ -39,7 +39,7 @@
             transform: scale(0.95); 
         } 
 
-        /* The active slide is visible and scaled to normal */ 
+        /* Aktive Folie sichtbar und skaliert in Originalgröße */ 
         .slide.active { 
             display: flex; 
             opacity: 1; 
@@ -47,7 +47,7 @@
             z-index: 10; 
         } 
 
-        /* Animation for elements within a slide (fragments) */ 
+        /* Animation für Elemente innerhalb einer Folie (Fragmente) */ 
         .fragment { 
             opacity: 0; 
             transform: translateY(20px); 
@@ -59,7 +59,7 @@
             transform: translateY(0); 
         } 
 
-        /* Styling for the navigation buttons */ 
+        /* Styling für die Navigationsbuttons */ 
         .nav-button { 
             position: fixed; 
             z-index: 100; 
@@ -78,7 +78,7 @@
         #prev-slide { right: 6rem; } 
         #next-slide { right: 2rem; } 
 
-        /* Progress dots styling */ 
+        /* Styling für Progress-Punkte */ 
         #progress-dots { 
             position: fixed; 
             bottom: 2.5rem; 
@@ -110,7 +110,7 @@
             height: 100%; 
             border: 1px solid #374151; /* Gray-700 */ 
             overflow-x: auto; 
-            white-space: pre-wrap; /* Wrap long lines */ 
+            white-space: pre-wrap; /* Zeilen umbrechen */ 
         } 
         pre.code-block code span.highlight { 
             color: #FBBF24; /* Amber-400 */ 
@@ -122,7 +122,7 @@
 </head> 
 <body> 
 
-    <!-- SLIDE 0: Title Slide --> 
+    <!-- SLIDE 0: Titel Folie --> 
     <section class="slide active"> 
         <div class="text-center flex flex-col justify-between h-full py-12"> 
             <div>
@@ -131,11 +131,11 @@
                 <p class="mt-12 text-xl text-gray-400">Pietro Rossi</p> 
                 <p class="mt-2 text-base text-gray-500">BBW.ch</p> 
             </div>
-            <!-- QR code and link centered below main content with white frame -->
+            <!-- QR-Code und Link zentriert unter dem Hauptinhalt mit weißem Rahmen -->
             <div class="mt-8 flex flex-col items-center">
                 <div class="bg-white p-4 rounded-lg inline-block">
                     <img src="img/presentation/qr_code_tool2.png"  
-                         alt="QR Code to presentation"  
+                         alt="QR Code zur Präsentation"  
                          class="h-24" 
                          onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/111827?text=qr_code_tool2.png';"> 
                 </div>
@@ -143,7 +143,7 @@
                     aburossi.ch/oot
                 </a>
             </div>
-            <!-- Footer at bottom -->
+            <!-- Footer am unteren Rand -->
             <p class="text-sm text-gray-600 mt-auto pt-4">Interaktives Design von Gemini</p>
         </div> 
     </section> 
@@ -152,7 +152,7 @@
     <div class="text-center w-full max-w-4xl"> 
         <h2 class="text-5xl font-bold mb-12">Wer ist heute hier?</h2> 
         <div class="space-y-8 text-2xl text-gray-200"> 
-            <!-- Slot 1: Each point gets its own fragment --> 
+            <!-- Slot 1: Jedes Punkt bekommt sein eigenes Fragment --> 
             <div class="fragment"> 
                 <p>Bitte aufstehen: Wer ist <strong>OLAT-Autor</strong> und erstellt Inhalte?</p> 
             </div> 
@@ -174,25 +174,25 @@
     </div> 
 </section> 
 
-<!-- SLIDE 2: The Models --> 
+<!-- SLIDE 2: Die Werkzeugkiste --> 
 <section class="slide"> 
     <div class="w-full max-w-6xl h-full flex flex-col justify-between"> 
         <h2 class="text-5xl font-bold mb-12 text-center">Die Werkzeugkiste</h2> 
         <div class="flex flex-col md:flex-row items-start gap-12 flex-grow"> 
-            <!-- Left side: Main Models --> 
+            <!-- Linke Seite: Hauptmodelle --> 
             <div class="flex-1 flex flex-col items-center"> 
                 <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3>
-                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-96 mb-4" 
+                <img src="img/presentation/logos_main.png" alt="OpenAI und Gemini Logos" class="h-96 mb-4" 
                     onerror="this.onerror=null;this.src='https://placehold.co/400x300/111827/374151?text=logos_main.png';"> 
             </div> 
-            <!-- Right side: Other Models & Description --> 
+            <!-- Rechte Seite: Andere Modelle & Beschreibung --> 
             <div class="flex-1 flex flex-col items-center md:items-start"> 
                 <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3>
-                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-64 mb-4" 
+                <img src="img/presentation/logos_alternatives.png" alt="Claude und DeepSeek Logos" class="h-64 mb-4" 
                     onerror="this.onerror=null;this.src='https://placehold.co/300x200/111827/374151?text=logos_alternatives.png';"> 
             </div> 
         </div> 
-        <!-- Centered bulletpoints at the bottom --> 
+        <!-- Zentrierte Bulletpoints am unteren Rand --> 
         <div class="flex justify-center mt-8 mb-4"> 
             <ul class="space-y-3 text-lg text-gray-300 list-disc list-inside text-center max-w-2xl"> 
                 <li><strong>GPT-4o/4.1:</strong> Der qualitative Alleskönner für komplexe Textaufgaben.</li> 
@@ -232,48 +232,55 @@
             </div> 
             <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
             <script> 
-            document.getElementById('loadButton').addEventListener('click', function() {
+            // Automatisches Laden des Inhalts beim Laden der Folie
+            document.addEventListener('DOMContentLoaded', () => {
                 fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/olat_fragengenerator/texts/single_choice.md') 
                   .then(res => res.text()) 
                   .then(md => { 
-                    // Fix vertical display
+
                     const mdBox = document.getElementById('mdBox');
                     mdBox.innerHTML = marked.parse(md);
-                    mdBox.style.display = 'block';
-                    mdBox.style.padding = '1em';
-                    mdBox.style.alignItems = 'flex-start';
+
                   })
                   .catch(err => {
                     document.getElementById('mdBox').innerHTML = `<p class="text-red-400 p-4">Fehler beim Laden: ${err.message}</p>`;
                   });
-              });
+            });
             </script> 
         </div> 
     </div> 
 </section> 
-<!-- SLIDE 4: Architecture --> 
+<!-- SLIDE 4: Architektur --> 
 <section class="slide"> 
-  <div class="w-full max-w-6xl flex flex-col"> 
+  <div class="w-full max-w-6xl flex flex-col h-full"> 
     <h2 class="text-5xl font-bold mb-12 text-center">Vom Prompt zur Systemarchitektur</h2> 
 
-    <iframe  
-      src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html"
-      width="100%" 
-      height="400" 
-      style="border:1px solid #374151; border-radius:0.5rem; background:#18181b;" 
-      title="Flow Diagram"> 
-    </iframe> 
-    <div class="mt-4 space-y-2"> 
-      <p class="text-lg text-gray-300">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
-      <p class="text-lg text-gray-300">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p> 
+    <div class="flex flex-col md:flex-row gap-8 flex-grow"> 
+      <!-- Textinhalt (1/3 Breite) -->
+      <div class="w-full md:w-1/3 flex flex-col justify-center"> 
+        <div class="space-y-4"> 
+          <p class="text-lg text-gray-300">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
+          <p class="text-lg text-gray-300">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p>
+        </div>
+        <div class="text-center mt-4"> 
+          <a href="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" target="_blank" class="text-sm text-gray-400 hover:text-indigo-400"> 
+            Flow-Diagramm als eigene Seite öffnen 
+          </a> 
+        </div> 
+      </div>
+      
+      <!-- iframe (2/3 Breite) -->
+      <div class="w-full md:w-2/3 h-full"> 
+        <iframe  
+          src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html"
+          class="w-full h-full"
+          style="border:1px solid #374151; border-radius:0.5rem; background:#18181b;" 
+          title="Flow Diagram"> 
+        </iframe> 
+      </div>
     </div>
-    <div class="text-center mt-2 text-xs text-gray-400"> 
-      <a href="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" target="_blank" class="hover:text-indigo-400"> 
-        Flow-Diagramm als eigene Seite öffnen 
-      </a> 
-    </div> 
   </div> 
-</section> 
+</section>
 <!-- SLIDE 5: Tool 1 (Python) with Live Embed --> 
 <section class="slide"> 
     <div class="w-full max-w-7xl h-full flex flex-col"> 
