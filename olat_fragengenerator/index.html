@@ -67,7 +67,7 @@
             color: white;
             padding: 0.75rem;
             border-radius: 9999px;
-            cursor: pointer;
+        _BORDERS_
             transition: background-color 0.2s;
         }
         .nav-button:hover {
@@ -146,7 +146,8 @@
                                 <div class="fragment mt-6">
                     <p>Bitte aufstehen: Wer nutzt aktiv eine <strong>KI mit Abo</strong> (ChatGPT Plus, Gemini Advanced, etc.)?</p>
                 </div>
-                                <div class="fragment mt-6">
+          _BORDERS_
+                <div class="fragment mt-6">
                     <p>Und zuletzt: Wer weiss, was ein <strong>API-Schlüssel</strong> ist und hat schon einen verwendet?</p>
                 </div>
             </div>
@@ -184,9 +185,9 @@
             <div class="flex-grow flex flex-col md:flex-row gap-8 min-h-0">
                                 <div class="flex-1 flex flex-col">
                     <h3 class="text-2xl font-semibold mb-4 text-center text-red-400">Vorher</h3>
-                    <iframe src="https://chatgpt.com/share/685a3551-e650-8006-abf1-c8dc47811655/embed?theme=dark"
+                    <iframe src="https://chatgpt.com/share/685a3551-e650-8006-abf1-c8dc47811655/embed?theme=dark" 
                             style="width: 100%; height: 600px; border-radius: 0.5rem; border: 1px solid #374151;"
-                            title="Simple prompt in ChatGPT"></iframe>
+              _BORDERS_tle="Simple prompt in ChatGPT"></iframe>
                 </div>
                                 <div class="flex-1 flex flex-col">
                   <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3>
@@ -225,7 +226,7 @@
             </a>
           </div>
         </div>
-                <div class="mt-12 text-center">
+                <div class="mt-12 text-center max-w-4xl">
           <h2 class="text-5xl font-bold mb-8">Vom Prompt zur Systemarchitektur</h2>
           <p class="text-xl text-gray-300 mb-4">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p>
           <p class="text-lg text-gray-400">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p>
@@ -246,7 +247,6 @@
             </a>
         </div>
     </section>
-
 
         <section class="slide">
         <div class="w-full max-w-7xl h-full flex flex-col">
@@ -289,10 +289,9 @@
                         </li>
                          <li class="flex items-start">
                             <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                            <span><strong>Open Source:</strong> Die Tools sind auf GitHub verfügbar. Feedback, Ideen und Beiträge sind herzlich willkommen.
-                            <br>
-                              <a href="https://olatimport.streamlit.app/" target="_blank" class="text-cyan-400 hover:underline">Fragengenerator Streamlit</a>,
-                              <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-indigo-400 hover:underline">MulitLLM App</a>
+                            <span><strong>Open Source:</strong> Die Tools sind auf GitHub verfügbar. Feedback, Ideen und Beiträge sind herzlich willkommen.<br>
+                                <a href="https://olatimport.streamlit.app/" target="_blank" class="text-cyan-400 hover:underline">Fragengenerator Streamlit</a>, 
+                                <a href="https://rossipietro.github.io/olat/multiLLM.html" target="_blank" class="text-indigo-400 hover:underline">MulitLLM App</a>
                             </span>
                         </li>
                     </ul>
@@ -363,16 +362,13 @@
                 // Deactivate all slides and fragments
                 slides.forEach(slide => {
                     slide.classList.remove('active');
-                    // Only remove 'visible' if we are moving to a different slide
-                    if (currentSlideIndex !== index) {
-                        slide.querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
-                    }
+                    slide.querySelectorAll('.fragment').forEach(f => f.classList.remove('visible'));
                 });
 
                 // Activate the new slide
                 slides[index].classList.add('active');
                 currentSlideIndex = index;
-                
+  _BORDERS_       
                 // Update progress dots
                 dots.forEach((dot, dotIndex) => {
                     dot.classList.toggle('active', dotIndex === index);
@@ -386,14 +382,7 @@
             }
 
             function prevStep() {
-                const currentSlide = slides[currentSlideIndex];
-                const visibleFragments = currentSlide.querySelectorAll('.fragment.visible');
-
-                // If there are visible fragments, hide the last one.
-                // Otherwise, go to the previous slide.
-                if (visibleFragments.length > 0) {
-                    hideLastFragment();
-                } else {
+                 if (!hideLastFragment()) {
                     goToSlide(currentSlideIndex - 1);
                 }
             }
@@ -403,11 +392,9 @@
             prevButton.addEventListener('click', prevStep);
 
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === ' ') { // Added space bar for next step
-                    e.preventDefault();
+                if (e.key === 'ArrowRight') {
                     nextStep();
                 } else if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
                     prevStep();
                 }
             });
