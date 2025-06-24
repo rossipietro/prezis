@@ -1,3 +1,4 @@
+99 Zettelkasten/Untitled 35.md
 <!DOCTYPE html> 
 <html lang="de"> 
 <head> 
@@ -168,13 +169,13 @@
             <!-- Left side: Main Models --> 
             <div class="flex-1 flex flex-col items-center"> 
                 <h3 class="text-3xl font-semibold text-indigo-400 mb-6">Haupt</h3>
-                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-48 mb-4" 
+                <img src="img/presentation/logos_main.png" alt="OpenAI and Gemini Logos" class="h-96 mb-4" 
                     onerror="this.onerror=null;this.src='https://placehold.co/400x300/111827/374151?text=logos_main.png';"> 
             </div> 
             <!-- Right side: Other Models & Description --> 
             <div class="flex-1 flex flex-col items-center md:items-start"> 
                 <h3 class="text-3xl font-semibold text-teal-400 mb-6">Effiziente Alternativen</h3>
-                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-32 mb-4" 
+                <img src="img/presentation/logos_alternatives.png" alt="Claude and DeepSeek Logos" class="h-64 mb-4" 
                     onerror="this.onerror=null;this.src='https://placehold.co/300x200/111827/374151?text=logos_alternatives.png';"> 
             </div> 
         </div> 
@@ -194,20 +195,20 @@
         <div class="w-full max-w-6xl h-full flex flex-col"> 
             <h2 class="text-5xl font-bold mb-8 text-center shrink-0">Prompt Engineering: Mehr als ein Modewort?</h2> 
             <div class="flex-grow flex flex-col md:flex-row gap-8 min-h-0"> 
-                <!-- Before --> 
-                <div class="flex-1 flex flex-col"> 
+                <!-- Vorher button with link --> 
+                <div class="flex-1 flex flex-col items-center justify-center"> 
                     <h3 class="text-2xl font-semibold mb-4 text-center text-red-400">Vorher</h3> 
-                    <iframe 
-                        src="https://chatgpt.com/share/685a3551-e650-8006-abf1-c8dc47811655" 
-                        style="width:100%; height:600px; border:1px solid #374151; border-radius:0.5rem;"
-                        title="ChatGPT Prompt Example">
-                    </iframe>
+                    <a href="https://chatgpt.com/share/685a3551-e650-8006-abf1-c8dc47811655" target="_blank" class="px-6 py-3 bg-red-600 text-white rounded-lg font-medium text-xl hover:bg-red-700 transition text-center">
+                      Conversation öffnen
+                    </a>
                 </div> 
-                <!-- After --> 
+                <!-- Nachher with manual load --> 
                 <div class="flex-1 flex flex-col"> 
                   <h3 class="text-2xl font-semibold mb-4 text-center text-green-400">Nachher</h3> 
-                  <div id="mdBox" style="height:600px; overflow-y:auto; border:1px solid #374151; background:#18181b; color:#d1d5db; border-radius:8px; padding:1em;"> 
-                    Lade Inhalt... 
+                  <div id="mdBox" style="height:600px; overflow-y:auto; border:1px solid #374151; background:#18181b; color:#d1d5db; border-radius:8px; display:flex; align-items:center; justify-content:center;"> 
+                    <button id="loadButton" class="px-6 py-3 bg-green-600 text-white rounded-lg text-xl font-medium hover:bg-green-700 transition"> 
+                      Inhalt laden 
+                    </button> 
                   </div> 
                   <a href="https://github.com/rossipietro/prezis/blob/main/olat_fragengenerator/texts/single_choice.md" target="_blank" class="text-center mt-2 text-xs text-gray-400 hover:text-indigo-400"> 
                     Link zum Prompt auf GitHub 
@@ -215,11 +216,16 @@
                 </div> 
                 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
                 <script> 
-                fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/olat_fragengenerator/texts/single_choice.md') 
-                  .then(res => res.text()) 
-                  .then(md => { 
-                    document.getElementById('mdBox').innerHTML = marked.parse(md); 
-                  }); 
+                document.getElementById('loadButton').addEventListener('click', function() {
+                  fetch('https://raw.githubusercontent.com/rossipietro/prezis/main/olat_fragengenerator/texts/single_choice.md') 
+                    .then(res => res.text()) 
+                    .then(md => { 
+                      document.getElementById('mdBox').innerHTML = marked.parse(md); 
+                    }) 
+                    .catch(err => { 
+                      document.getElementById('mdBox').innerHTML = `<p class="text-red-400 p-4">Fehler beim Laden: ${err.message}</p>`;
+                    }); 
+                }); 
                 </script> 
             </div> 
         </div> 
@@ -229,13 +235,15 @@
     <section class="slide"> 
       <div class="w-full max-w-6xl flex flex-col"> 
         <h2 class="text-5xl font-bold mb-12 text-center">Vom Prompt zur Systemarchitektur</h2> 
+        
         <iframe  
-          src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html" 
+          src="https://rossipietro.github.io/prezis/olat_fragengenerator/flow.html"
           width="100%" 
           height="400" 
           style="border:1px solid #374151; border-radius:0.5rem; background:#18181b;" 
           title="Flow Diagram"> 
         </iframe> 
+        
         <div class="mt-2 space-y-2"> 
           <p class="text-lg text-gray-300">Ein Prompt allein ist nicht skalierbar. Für echte Anwendungen braucht es eine robuste Architektur.</p> 
           <p class="text-lg text-gray-300">Modelle mit grossen Kontextfenstern (z.B. Gemini 2.5 mit 2 Mio. Tokens) sind der Schlüssel, um komplexe Anweisungen und grosse Dokumente gleichzeitig zu verarbeiten.</p> 
@@ -440,4 +448,4 @@
         }); 
     </script> 
 </body> 
-</html> 
+</html>
